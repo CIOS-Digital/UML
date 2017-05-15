@@ -7,21 +7,35 @@ package FlightPlan {
         __
         {static} +FlightPlan Empty()
         ..
-        {static} +FlightPlan FromXMLString(String)
-        +String ToXMLString()
+        {static} +FlightPlan XmlLoad(String filename)
+        +String ToXmlString()
         ..
         +int CountWaypoints()
-        +IEnumerable<Coordinate> GetWaypoints()
-        +void AppendWaypoint(Coordinate)
-        +bool ContainsWaypoint(Coordinate)
-        +bool InsertWaypoint(Coordinate, int index)
-        +bool MoveWaypoint(Coordinate from, Coordinate to)
-        +bool MoveWaypoint(int index, Coordinate to)
-        +bool RemoveWaypoint(Coordinate)
+        +IEnumerable<Waypoint> GetWaypoints()
+        +void AppendWaypoint(Waypoint)
+        +bool ContainsWaypoint(Waypoint)
+        +bool InsertWaypoint(Waypoint, int index)
+        +bool MoveWaypoint(Waypoint from, Waypoint to)
+        +bool MoveWaypoint(int index, Waypoint to)
+        +bool RemoveWaypoint(Waypoint)
         +bool RemoveWaypoint(int index)
     }
 
-    FlightPlan *-- Coordinate
+    FlightPlan *-- Waypoint
+
+    +class Waypoint {
+        -Coordinate Coordinate
+        -String ID
+        -WaypointType Type
+    }
+
+    Waypoint *-- Coordinate
+    Waypoint o-- WaypointType
+
+    +enum WaypointType {
+        UserWaypoint
+        Airport
+    }
 }
 
 @enduml
