@@ -19,18 +19,13 @@ MCONTIMG = out/mapcontrol.png
 MDBUML = src/mapdb.uml
 MDBIMG = out/mapdb.png
 
-UC_ADDWAYPOINT_UML = src/uc_add_waypoint.uml
-UC_ADDWAYPOINT_IMG = out/uc_add_waypoint.png
-
-all: $(APPIMG) use_cases
+all: $(APPIMG)
 
 $(PLANTUML):
 	wget https://cedrickc.net/res/plantuml.jar
 
 out:
 	mkdir out
-
-use_cases: $(UC_ADDWAYPOINT_IMG)
 
 $(APPIMG): $(APPUML) $(COORDIMG) $(FPLANIMG) $(MCONTIMG) | $(PLANTUML) out
 	$(JAVA) $(JAVA_ARGS) $(PLANTUML) $(PLANTUML_ARGS) $<
@@ -47,10 +42,7 @@ $(MCONTIMG): $(MCONTUML) $(COORDIMG) $(FPLANIMG) $(MDBIMG) | $(PLANTUML) out
 $(MDBIMG): $(MDBUML) $(COORDIMG) | $(PLANTUML) out
 	$(JAVA) $(JAVA_ARGS) $(PLANTUML) $(PLANTUML_ARGS) $<
 
-$(UC_ADDWAYPOINT_IMG): $(UC_ADDWAYPOINT_UML) | $(PLANTUML) out
-	$(JAVA) $(JAVA_ARGS) $(PLANTUML) $(PLANTUML_ARGS) $<
-
 clean:
 	-rm -f ./out/*.png
 
-.PHONY: all clean use_cases
+.PHONY: all clean
